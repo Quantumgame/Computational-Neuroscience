@@ -43,8 +43,8 @@ for i in range(0,6):
     N=i+1
     A=A[i]
     t_step=n[i]
-    c=c[i]
-    for j in c:
+    k=c[i]
+    for j in k:
         u=j
         DRAW(dt=0.001,t_step,A,u,N)
 pl.show()
