@@ -1,0 +1,44 @@
+import numpy as np
+import random
+c=0.2
+N=100
+K=N*c #this is the number of postsynapse
+#Way 1: fixed outdegree
+a=np.zeros([100,100])
+for i in range(0,100):
+    for j in random.sample(xrange(100),20):
+        a[j,i]=1 #when neuron i projects to neuron j, the a[j,i]=1; else, a[j,i]=0
+#Way 2: random number from uniform distribution for each step and compare with connection rate c
+b=np.zeros([100,100])
+c=0.2
+for i in range(0,100):
+    for j in range(0,100):
+        com=np.random.uniform(size=1)
+        if com<c:
+            b[j,i]=1
+        else:
+            b[j,i]=0
+
+#how to calculate indegree and outdegree
+indegree_a=a.sum(1)
+outdegree_a=a.sum(0)
+
+indegree_b=b.sum(1)
+outdegree_b=b.sum(0)
+#indegree is the input for each neuron= the sum of each row; outdegree is the output for each neuron= the sum of each column
+plt.hist(indegree_a)
+#all the indegree and outdegree (except for the outdegree_a) obey Gaussian Distribution
+
+#change the synapse strength into a Gaussian distribution random number instead of 1, then change the code into:
+b=np.zeros([100,100])
+c=0.2
+for i in range(0,100):
+    for j in range(0,100):
+        com=np.random.uniform(size=1)
+        if com<c:
+            b[j,i]=np.random.normal(loc=1.0,scale=0.2)
+        else:
+            b[j,i]=0
+plt.pcolor(b)
+plt.colorbar()
+plt.show()
