@@ -1,10 +1,10 @@
 import numpy as np
 import pylab as pl
 
-tau=1#ms
-binsize=1#ms
-dt=1#ms
-T=1000#ms
+tau=0.001#s
+binsize=0.001#s
+dt=0.001#s
+T=1.#s
 N=10#number of neuron
 gE=0.015
 gI=-0.075
@@ -20,15 +20,18 @@ def poisson(rate,sim_time):
         time+=event
         events = np.append(events,time)
     return events
-A=poisson(100000,T/1000.)#whether should we take out the value larger than 1s?
-spikes=np.histogram(A,np.arange(0,T/1000.+binsize/1000.,binsize/1000.))[0]
+A=poisson(10.,T)#whether should we take out the value larger than 1s?
+spikes=np.histogram(A,np.arange(0,T+binsize,binsize))[0]
 
 def outputrate(g):
-    n=T/binsize
+    n=int(T/binsize)
     y=np.zeros(n)
-    y[0]=y0
+    y[0]=0
+    C=np.exp(-binsize/tau)
     for i in range(0,n-1):
-        y[i+1]= np.exp(-binsize/tau)*y[i]+g*spikes[i]#y0 or not?
+        y[i+1]= C*y[i]+g*spikes[i]#y0 or not?
     return y
 
 c=outputrate(gI)+y0
+pl.plot(c)
+pl.show()
