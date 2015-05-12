@@ -8,9 +8,8 @@ T=1.#s
 N=10#number of neuron
 gE=0.015
 gI=-0.075
-
 y0=10#Hz
-
+n=int(T/binsize)
 
 def poisson(rate,sim_time):
     time = 0.
@@ -24,14 +23,38 @@ A=poisson(10.,T)#whether should we take out the value larger than 1s?
 spikes=np.histogram(A,np.arange(0,T+binsize,binsize))[0]
 
 def outputrate(g):
-    n=int(T/binsize)
     y=np.zeros(n)
     y[0]=0
     C=np.exp(-binsize/tau)
     for i in range(0,n-1):
         y[i+1]= C*y[i]+g*spikes[i]#y0 or not?
-    return y
+    return y+y0
 
-c=outputrate(gI)+y0
-pl.plot(c)
+#c=outputrate(gI)+y0
+#pl.plot(c)
+#pl.show()
+
+def neuronfireP(g):
+    P=np.zeros(n)
+    c=outputrate(g=g)
+    P=1-np.exp(-1*c*dt)
+    return P
+
+#k=neuronfireP(gI)
+#pl.plot(k)
+#pl.show()
+
+def neuronspikes(g):
+    P=neuronfireP(g=g)
+    spikes=np.zeros(len(P))
+    for i in range(0,len(P)):
+        ran=np.random.uniform(low=0.0,high=1.0)
+        if P[i]<=ran:
+            spikes[i]=0
+        else:
+            spikes[i]=1
+    return spikes
+
+spikes=neuronspikes(gE)
+pl.plot(spikes)
 pl.show()
