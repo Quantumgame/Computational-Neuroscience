@@ -1,0 +1,76 @@
+import numpy as np
+#import pylab as pl
+import matplotlib.pyplot as pl
+
+tau=0.1#s
+binsize=0.001#s
+dt=0.001#s
+T=1.#s
+N=5#number of neurons
+gE=0.015
+gI=-0.075
+y0=10.#Hz
+n=int(T/binsize)
+
+
+#create a network
+def make_random_network():
+	network=np.zeros((N,N))
+	p=0.3
+	network2=np.random.random((N,N))
+	network[np.where(network2<=p)]=1
+	network[:,0:N*1/5]=network[:,0:N*1/5]*gI
+	network[:,N*1/5:]=network[:,N*1/5:]*gE
+	return network
+
+
+def make_rasta_plot(x):
+    pl.figure('Rastah plat oh jah')
+    spikes=np.where(x==1)    
+    pl.plot(spikes[1]*binsize,spikes[0]+1,'|')
+    pl.title('Raster Plot')
+    pl.xlabel('Time')
+    pl.ylabel('Neuron Index')
+    pl.ylim(0,N+1)
+    pl.show()
+    return spikes[1]*binsize
+
+
+
+
+def rec(network):
+    rec=np.zeros((N,n))
+    C=np.exp(-binsize/tau)
+    y=np.zeros(n)
+    y[0] = 0
+    for t in np.arange(0,n-binsize,binsize):
+		for o in range(0,N):
+		    G=np.dot(rec[:,t],network[o])
+		    y[t+binsize]= C*y[t]+G/tau
+		    rate=y[t+binsize]+y0
+		    P=1-np.exp(-1*rate*binsize)
+		    ran=np.random.uniform(low=0.0,high=1.0)
+		    if P<=ran:
+		        rec[o,t+binsize]=0
+		    else:
+				if rate <0:
+					rec[o,t+binsize]=0
+				else:
+					rec[o,t+binsize]=1
+    return rec
+network=make_random_network()
+rec=rec(network)
+
+
+for i in range(0,N):    
+    spikes=np.where(rec[i]==1)
+    spiketimes=spikes[0]*binsize
+    isi=np.diff(spiketimes)
+    pl.hist(np.log(isi),10,'b')
+
+
+
+
+
+
+
