@@ -1,0 +1,277 @@
+#Author: Han Lu
+#Master student from Joint Master in Neuroscience, University of Strasbourg, France
+
+
+import numpy as np
+import scipy.io
+import pylab as pl
+
+'''load data'''
+data = scipy.io.loadmat("v1_data.mat")
+csd = data['csd']
+sua = data['sua']
+time = data['timevec'][0]
+trial_N = len(csd[0,0,:])
+
+
+'''Task 1 and Task 2'''
+##process csd and sua data
+csd_trial = np.mean(csd,axis=2) #average csd over trial
+
+idx = np.where(sua>0) #get index of spike numbers in sua
+x = len(sua[:,0,0]) #get the x dimention of sua matrix
+y = len(sua[0,:,0]) #get the y dimention of sua matrix
+z = len(sua[0,0,:]) #get the z dimention of sua matrix
+sua_temp = np.zeros((x,y,z)) #build a zero matrix sharing same shape with sua matrix
+sua_temp[idx] = sua[idx] #replace zeros with orignal integers when there were spikes in sua matrix. This is to avoid the difficulty for Python to plot 'NaN's
+sua_trial = np.mean(sua_temp,axis=2) #average sua over trial
+
+
+##plot depth-by-time profile of trial-average CSD and SUA
+y = np.arange(0,1700,100) #set y axis of the plot
+x = time #set x axis of the plot
+
+pl.figure(1)
+pl.pcolor(x,y,csd_trial)
+pl.colorbar()
+pl.title("trial-averaged current source density (CSD)")
+pl.xlabel("time (s)")
+pl.xlim(0,1)
+pl.ylabel("depth referred to the hippocampus (microns)")
+
+pl.figure(2)
+pl.pcolor(x,y,sua_trial)
+pl.colorbar()
+pl.title("single unit activities (SUA)")
+pl.xlabel("time (s)")
+pl.xlim(0,1)
+pl.ylabel("depth referred to the hippocampus (microns)")
+
+
+'''Task 3'''
+##get channel data
+Ch3 = csd[2][:,0] #first trial of Ch3
+Ch7 = csd[6][:,0] #first trial of Ch7
+Ch13 = csd[12][:,0] #first trial of Ch13
+
+##define a short term Fourier transform function
+def stft(x, tw, delta_t):
+    '''
+    Input: x: signal
+        tw: window size
+        delta_t: step size
+    Output: y: Time-resolved Fourier spectrum
+        1-dim: frequency
+        2-dim: time step
+    '''
+    window_starts = range(0, x.shape[0]-tw+delta_t/2, delta_t)
+    if window_starts[-1]+tw > x.shape[0]:
+        window_starts = window_starts[:-1]
+    n_windows = len(window_starts)
+    y = np.ones((tw/2+1,n_windows), dtype=complex)
+    for i, win in enumerate(window_starts):
+        y[:,i]=np.fft.rfft(x[win:win+tw])
+    y[1:] = 2*y[1:]
+    return y
+
+##calculate power spectra 
+tw = 300 #set time window
+delta_t = 10 #set step size
+
+spectrum1 = abs(stft(Ch3,tw,delta_t)) #get power of Ch3
+spectrum2 = abs(stft(Ch7,tw,delta_t)) #get power of Ch7
+spectrum3 = abs(stft(Ch13,tw,delta_t)) #get power of Ch13
+
+fres = len(spectrum1[:,0]) #get the length of the first dimention
+times = len(spectrum1[0,:]) #get the length of the second dimention
+
+x = np.arange(0,fres+1,1) #set the x axis for plotting, to fully plot the information in pcolor, set the dimention larger than the dataset
+y = np.linspace(min(time),max(time),times+1) #set the y axis for plotting, to fully plot the information in pcolor, set the dimention larger than the dataset
+
+##plotting time-frquency spectrum
+pl.figure(3)
+pl.subplot(3,1,1)
+pl.pcolor(x,y,spectrum1.T)
+pl.ylabel("time(s) Ch3")
+pl.title("Time frequency power spectra of CSD")
+pl.clim(-120000,200000)
+pl.ylim(0,1)
+pl.xlim(0,fres)
+pl.colorbar()
+
+pl.subplot(3,1,2)
+pl.pcolor(x,y,spectrum2.T)
+pl.clim(-120000,200000)
+pl.ylim(0,1)
+pl.xlim(0,fres)
+pl.ylabel("time(s) Ch7")
+pl.colorbar()
+
+pl.subplot(3,1,3)
+pl.pcolor(x,y,spectrum3.T)
+pl.clim(-120000,200000)
+pl.ylim(0,1)
+pl.xlabel("Frequency (Hz)")
+pl.ylabel("time(s) Ch13")
+pl.xlim(0,fres)
+pl.colorbar()
+
+'''Task 4'''
+##run stft of csd data for every trial every channel
+spe_channel = []
+for ch in np.arange(0,16,1):
+    spe_trial = []
+    for trial in np.arange(0,trial_N,1):
+        signal = csd[ch,:,trial]
+        spe = abs(stft(signal,tw,delta_t))
+        gamma_band = np.mean(spe[25:100,:],axis=0) #get the mean power calue of gamma band (25Hz-100Hz)
+        spe_trial.append(gamma_band)
+    spe_channel.append(spe_trial)
+        
+a = np.array(spe_channel)
+a_trialave = np.mean(a,axis=1) #average gamma band power over trial
+
+
+##plotting depth-by-time profile of gamma band power 
+pl.figure(4)
+n = len(a_trialave[0,:])
+x1 = np.linspace(min(time),max(time),n+1)
+y = np.arange(0,1700,100)
+pl.pcolor(x1,y,a_trialave)
+pl.colorbar()
+pl.title("trial-averaged gamma band power")
+pl.xlabel("time (s)")
+pl.xlim(0,1)
+pl.ylabel("depth referred to the hippocampus (microns)")
+
+
+'''Task 5'''
+##get data
+Ch8_csd = csd[7] #get csd data of Ch8
+Ch8_sua = sua_temp[7] #get sua data of Ch8
+
+csd1 = np.mean(Ch8_csd[0:500,:],axis=1) #obtain csd data from time window 0-500ms
+csd2 = np.mean(Ch8_csd[500:1000,:],axis=1) #obtain csd data from time window 500-1000ms
+
+sua1 = np.mean(Ch8_sua[0:500,:],axis=1) #obtain sua data from time window 0-500ms
+sua2 = np.mean(Ch8_sua[500:1000,:],axis=1) #obtain sua data from time window 500-1000ms
+
+##calculate cross correlation bewteen sua and csd, this is the first step to calculate coherence
+#time window 0-500ms
+CC1_xy = np.correlate(csd1,sua1,'full')
+CC1_xx = np.correlate(csd1,csd1,'full')
+CC1_yy = np.correlate(sua1,sua1,'full')
+
+#time windom 500-1000ms
+CC2_xy = np.correlate(csd2,sua2,'full')
+CC2_xx = np.correlate(csd2,csd2,'full')
+CC2_yy = np.correlate(sua2,sua2,'full')
+
+##calculate coherence with cross spectra. discrete Fourier transform was used to get spectra of discrete data 
+Co1 = abs(np.fft.fft(CC1_xy))/np.sqrt(abs(np.fft.fft(CC1_xx))*abs(np.fft.fft(CC1_yy)))
+Co2 = abs(np.fft.fft(CC2_xy))/np.sqrt(abs(np.fft.fft(CC2_xx))*abs(np.fft.fft(CC2_yy)))
+
+#plotting coherence strength against frequency
+Cohe1 = [item for item in Co1] #change data form into list
+Cohe2 = [item for item in Co2] #change data form into list
+
+pl.figure(5)
+pl.subplot(2,1,1)
+x = np.arange(0,len(Co1),1)
+pl.ylabel("Spike Field Coherence")
+pl.plot(x,Cohe1)
+pl.title("time window: 0-500ms")
+pl.ylim(0.8,2.2)
+
+pl.subplot(2,1,2)
+pl.plot(x,Cohe2)
+pl.xlabel("Frequency (Hz)")
+pl.ylabel("Spike Field Coherence")
+pl.title("time window: 500-1000ms")
+
+
+'''Task 6'''
+##define a principal component analysis function
+def princomp(A):
+    """ performs principal components analysis 
+         (PCA) on the n-by-p data matrix A
+         Rows of A correspond to observations, columns to variables. 
+
+     Returns :  
+      coeff :
+        is a p-by-p matrix, each column containing coefficients 
+        for one principal component.
+      score : 
+        the principal component scores; that is, the representation 
+        of A in the principal component space. Rows of SCORE 
+        correspond to observations, columns to components.
+      latent : 
+        a vector containing the eigenvalues 
+        of the covariance matrix of A.
+    """
+
+    M = (A-np.mean(A.T,axis=1)).T #computing eigenvalues and eigenvectors of covariance matrix, subtract the mean (along columns)
+    [latent,coeff] = np.linalg.eig(np.cov(M)) #attention:not always sorted
+    score = np.dot(coeff.T,M) #projection of the data in the new space
+    return coeff,score,latent
+
+coeff,score,latent = princomp(csd_trial.T) #calculate PCA with csd data, trial averaged
+
+
+#In this case, I have 16 principal component, so I select the first two components by index 0 and 1. But I am not sure I am doing the right thing. But the score sares the same length with timevector. So I used it for STFT to obtain power spectra
+
+CP1 = score[0,:] #first principal component
+CP2 = score[1,:] #second principal component
+
+spec1 = abs(stft(CP1,tw,delta_t)) #power spectrum of first component
+spec2 = abs(stft(CP2,tw,delta_t)) #power spectrum of second component
+
+fres = len(spec1[:,0]) #length of first dimention
+times = len(spec1[0,:]) #length of second dimention
+
+x = np.arange(0,fres+1,1) #same in Task3, set the x axis for plotting, to fully plot the information in pcolor, set the dimention larger than the dataset
+y = np.linspace(min(time),max(time),times+1) #same in Task3, set the y axis for plotting, to fully plot the information in pcolor, set the dimention larger than the dataset
+
+##plotting time-frquency spectrum of the first two components
+pl.figure(6)
+pl.subplot(2,1,1)
+pl.title("time frequency power spectra of the first two components")
+pl.pcolor(x,y,spec1.T)
+pl.ylabel("time(s) Component1")
+pl.clim(0,180000)
+pl.xlim(0,fres)
+pl.ylim(0,1)
+pl.colorbar()
+
+pl.subplot(2,1,2)
+pl.pcolor(x,y,spec2.T)
+pl.ylabel("time(s) Component2")
+pl.xlim(0,fres)
+pl.ylim(0,1)
+pl.clim(0,180000)
+pl.xlabel("Frequency (Hz)")
+pl.colorbar()
+#I am not sure about this PCA analysis, so I cannot perform field-spike coherence analysis on these components.
+
+
+'''Task 7'''
+##The analysis that I am interested in is the correlation coefficient of spike trains between every pair channels
+Corrcoef = np.corrcoef(sua_trial) #correlation coefficient is calculated with this function
+
+#this step is used again to avoid difficulty in plotting 'NaN's
+idx = np.where(Corrcoef>0)
+n = len(Corrcoef[0,:])
+cc = np.zeros((n,n))
+cc[idx] = Corrcoef[idx]
+
+#plotting correlation coefficient among different channels
+x = np.arange(0,n+1,1)
+pl.figure(7)
+pl.pcolor(x,x,cc)
+pl.colorbar()
+pl.xlabel("Channels")
+pl.ylabel("Channels")
+pl.title("Correlation Coefficient of spike trains of all channels")
+
+
+pl.show()
