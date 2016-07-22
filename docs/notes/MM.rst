@@ -397,3 +397,159 @@ Let :math:`\rho = \frac{Cov[X,Y]}{\sqrt{Var[X]Var[Y]}}`, so :math:`\rho` is loca
 :math:`\rho` is called correlation coefficiant
 
 
+Principal Component Analysis
+=============================
+
+
+Mixture of orthogonal variables
+--------------------------------
+
+Let :math:`U` and :math:`V` be uncorrelated variables, :math:`Var[U] = 1`, :math:`Var[V] = 1`, and :math:`Cov[U,V]=0`.
+
+Then variables :math:`X` and :math:`Y` are mixtures of :math:`U` and :math:`V`.
+
+.. math::
+	X = \alpha U+ \beta V\\
+	Y = \gamma U + \delta V\\
+	\mathrm{Cov}[X,Y] & = E[XY]-E[X]E[Y]\\
+							& = E[(\alpha U+ \beta V)(\gamma U+\delta V)] - E[\alpha U+ \beta V]E[\gamma U+\delta V]\\
+							& = \alpha \gamma (E[U^2]-E[U]^2) +(\alpha \delta+ \gamma \beta)(E[UV]-E[U]E[V]) + \beta \delta (E[V^2]-E[V]^2)\\
+							& = \alpha \gamma \mathrm{Var}[U] +(\alpha \delta+ \gamma \beta)\mathrm{Cov}[U,V] + \beta \delta \mathrm{Var}[V]\\
+							& = \alpha \gamma + \beta \delta\\
+
+
+
+
+Conditional Probability
+=====================================
+For events A and B, with :math:`P(B) \neq 0`, one defines
+
+.. math::
+	P(A|B) = \frac{P(A \cap B)}{P(B)}
+
+
+A and B are stochastically independent, if:
+
+.. math::
+	P(A \cap B) = P(A)P(B)\\
+	P(A|B) = P(A)\\
+
+
+
+Assume that two events are neither impossible nor sure. If one is the becassary consequence of the other one, or if they are incompatible, they cannot be independent.
+
+So A and B are stochastically dependent, if:
+
+.. math::
+	P(A \cap B) \ neq P(A) P(B)\\
+	P(A|B) \neq P(A)
+
+
+Bayes' Rule
+--------------------------------------
+.. math::
+	P(A|B) & = \frac{P(A \cap B)}{P(B)}\\
+	P(B|A) & = \frac{P(B \cap A)}{P(A)}\\
+
+
+so,
+
+.. math::
+	P(A|B)P(B) = P(A \cap B) = P(B \cap A) = P(B|A) P(A)\\
+
+
+
+More generally, let :math:`B_1`, :math:`B_2`,...,:math:`B_n` be a disjoint cover of the space :math:`\Omega`:
+
+.. math::
+	\Omega = B_1 \cup B_2 \cup ... \cup B_n
+
+with :math:`B_i \cap B_j = \emptyset` for all :math:`i \neq j`. so :math:`P(\Omega)=1`
+
+
+One can write the probability :math:`P(A)`:
+
+
+.. math::
+	P(A|\Omega) & = \frac{P(A \cap \Omega)}{P(\Omega)}\\
+	P(A) & = \frac{P(A \cap \Omega)}{1}\\
+		  & = \sum_{i=1}^{n} P(A \cap B_i)\\
+		  & = \sum_{i=1}^{n} P(A|B_i) P(B_i)\\
+
+
+so,
+
+.. math::
+	P(B_j|A) & = \frac{P(B_j \cap A)}{P(A)}\\
+				& = \frac{P(B_j \cap A)}{\sum_{i=1}^{n} P(A|B_i) P(B_i)}\\
+				& = \frac{P(B_j)P(A|B_j)}{\sum_{i=1}^{n} P(A|B_i) P(B_i)}\\
+
+
+
+Smoothing and Averaging
+========================================
+
+We seek a model that describes a noisy system with one input and one output variable, and within the system, noise are added.
+
+
+First Step: Visulization
+---------------------------
+
+Graphical representation of the simutaneous measurements of input X and output Y.
+
+
+Basic Hypothesis
+------------------
+
+The concept of additive noise is frequently employed to model stochastic system.
+
+Output = Signal(Input)+Noise
+
+The signal has a deterministic part that only depends on the input and a stochastic part that is independent of the input.
+
+The additional silent assumption is that the noise term is normally distributed, with zero mean and constant variance. (According to central limit theorem)
+
+Averaging, smoothing, and Fitting
+---------------------------------
+To separate the signal from noise, or supress noise partially. The most frequently used methods are:
+
+(1) averaging over repeated and uncorrelated observations.
+
+(2) smoothing (filtering) by leveling out neighboring data points.
+
+(3) fitting a parametric model
+
+
+
+(In the case of correlation of noise components, or if noise is added in a non-linear way, avaraging, smoothing, and fitting should be operate with care.)
+
+
+
+Noise Reduction by Averaging
+---------------------------- 
+
+
+Consider a numeric random variable :math:`X` with:
+
+.. math::
+	\mathrm{E}[X] =\mu
+	\mathrm{Var}[X] = \sigma^2
+
+An example is :math:`X=S+N`, where :math:`S=\mu` is the signal, and :math:`N` is the normally distributed nosie with zero mean and variance :math:`\sigma^2`. For an ensemble :math:`X_1`, :math:`X_2`,...,:math:`X_n` of uncorrelated observations of :math:`X` the arithmetic mean is:
+
+.. math::
+	Y & = \frac{1}{n}\sum_{i=1}^{n}X_i\\
+	E[Y] & = E[\frac{1}{n}\sum_{i=1}^{n}X_i]\\
+		  & = \frac{1}{n} E[\sum_{i=1}^{n}X_i]]\\
+		  & = \frac{1}{n} n E[X]\\
+		  & = E[X]\\
+	Var[Y] & = Var[\frac{1}{n}\sum_{i=1}^{n}X_i]\\
+		  & = \frac{1}{n^2} Var[\sum_{i=1}^{n}X_i]\\
+		  & = \frac{1}{n^2}nVar[X]\\
+		  & = \frac{1}{n}\sigma^2\\
+
+
+So, :math:`\sqrt{Var[Y]} = \frac{\sigma}{\sqrt{n}}`, this is called Standard Error of the Mean (SEM).
+
+
+
