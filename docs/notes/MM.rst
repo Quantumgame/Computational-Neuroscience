@@ -298,6 +298,8 @@ maximum-likelihood estimation of parameters
 
 Moments
 ========
+
+
 First moment:
 
 .. math::
@@ -317,6 +319,8 @@ third moment:
 
 Linearity of Expectation
 -------------------------
+
+
 .. math::
 	E[\alpha X+\beta Y]= E[\alpha X] + E[\beta Y] = \alpha E[X] + \beta E[Y]
 
@@ -388,7 +392,7 @@ For this quatratic polynomial to have true roots, :math:`b^2-4ac>=0`. So:
 .. math::
 	(2E[\bar X \bar Y])^2 - 4E[\bar X^2] E[\bar Y^2] >= 0\\
 	E[\bar X \bar Y]^2 >= E[\bar X^2] E[\bar Y^2]\\
-	Cov[X,Y] >= Var[X] Var[Y]
+	Cov[X,Y]^2 >= Var[X] Var[Y]
 
 
 
@@ -422,6 +426,8 @@ Then variables :math:`X` and :math:`Y` are mixtures of :math:`U` and :math:`V`.
 
 Conditional Probability
 =====================================
+
+
 For events A and B, with :math:`P(B) \neq 0`, one defines
 
 .. math::
@@ -447,6 +453,8 @@ So A and B are stochastically dependent, if:
 
 Bayes' Rule
 --------------------------------------
+
+
 .. math::
 	P(A|B) & = \frac{P(A \cap B)}{P(B)}\\
 	P(B|A) & = \frac{P(B \cap A)}{P(A)}\\
@@ -550,6 +558,12 @@ An example is :math:`X=S+N`, where :math:`S=\mu` is the signal, and :math:`N` is
 
 
 So, :math:`\sqrt{Var[Y]} = \frac{\sigma}{\sqrt{n}}`, this is called Standard Error of the Mean (SEM).
+
+If :math:`X_1`,:math:`X_2`,...,:math:`X_n` are correlated ensembles,
+
+.. math::
+	Var[Y] = Var[\frac{1}{n}\sum_{i=1}^{n}X_i] = \frac{1}{n^2}Cov[X_i,X_j]<=\frac{1}{n}\sigma^2
+
 
 
 
