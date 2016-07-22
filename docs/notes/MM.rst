@@ -46,7 +46,7 @@ Binormial distribution
 ----------------------------
 
 Bernoulli Experiment
-   
+
 .. math::
    X &\sim B(1,p)\\
    \mu & = E[X] = \sum_n X_n \times P(X_n)= p\\
@@ -80,7 +80,7 @@ When n is very large and p is very tiny, Binomial distribution approaches Poisso
    P[X=k] & =\frac{\lambda^k}{k!}e^{-\lambda}\\
 
 
-Because 
+Because
 
 .. math::
 	e^x & = \sum_{n=0}^\infty \frac{x^n}{n!}\\
@@ -352,7 +352,7 @@ Same, to standarize a normal distribution, the new variable is :math:`\tilde X =
 
 .. math::
 	Var[\tilde X] & = E[(\tilde X - E[\tilde X])^2]\\
-					  & = E[(\tilde X)^2]\\ 
+					  & = E[(\tilde X)^2]\\
 					  & = E[(\frac{X-E[X]}{\sigma})^2]\\
 					  & = \frac{1}{\sigma^2} E[(X-E[X])^2]\\
 					  & = \frac{1}{\sigma^2} Var[X]\\
@@ -534,7 +534,7 @@ To separate the signal from noise, or supress noise partially. The most frequent
 
 
 Noise Reduction by Averaging
----------------------------- 
+----------------------------
 
 
 Consider a numeric random variable :math:`X` with:
@@ -566,4 +566,4 @@ If :math:`X_1`,:math:`X_2`,...,:math:`X_n` are correlated ensembles,
 
 
 
-
+Over
