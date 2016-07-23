@@ -570,7 +570,9 @@ Regression
 -----------------------
 
 
-To fit a model, maximum likelihood and least squares are used (they are the same thing).
+To fit a model, :math:`y(x)=y_a(x)`, in which :math:`a =(a_1,a_2,...,a_m)`, is to determine the parameters :math:`a`.
+
+Maximum likelihood and least squares are used (they are the same thing).
 
 .. math::
    L = \prod_{i=1}^{n} \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2}[\frac{y_i-y_a(x_i)}{\sigma}]^2}
@@ -578,3 +580,10 @@ To fit a model, maximum likelihood and least squares are used (they are the same
 
 .. math::
    \chi^2 = \sum_{i=1}^{n}[\frac{y_i-y_a(x_i)}{\sigma}]^2
+
+To determine the proper parameter :math:`a`s, :math:`\chi^2` should be minimal. So,
+
+.. math::
+   \frac{\partial}{\partial a_i} \chi^2 = 0
+
+for all :math:`i`.
