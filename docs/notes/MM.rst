@@ -566,4 +566,15 @@ If :math:`X_1`,:math:`X_2`,...,:math:`X_n` are correlated ensembles,
 
 
 
-Over
+Regression
+-----------------------
+
+
+To fit a model, maximum likelihood and least squares are used (they are the same thing).
+
+.. math::
+   L = \prod_{i=1}^{n} \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2}[\frac{y_i-y_a(x_i)}{\sigma}]^2}
+
+
+.. math::
+   \chi^2 = \sum_{i=1}^{n}[\frac{y_i-y_a(x_i)}{\sigma}]^2
