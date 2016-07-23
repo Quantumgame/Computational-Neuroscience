@@ -613,6 +613,6 @@ should hold approximately for all sample points.
 
 
 
-When judging whether a model is proper, maximum likelihood (or least square) is not enough. Another index is probability to encounter the measured value of :math"`\chi^2`, it is :math:`Q`.
+When judging whether a model is proper, maximum likelihood (or least square) is not enough. Another index is probability to encounter the measured value of :math:`\chi^2`, it is :math:`Q`.
 
 Values of :math:`Q` above 0.1 is a good approximation. If :math:`Q` is below 0.001, it is overfitting, so this model is not properly describing the data, or the noise of data is too high or not normally distributed. For values in between, if it is known that noise is not normally distributed, this model could be accepted.
