@@ -587,3 +587,24 @@ To determine the proper parameter :math:`a`s, :math:`\chi^2` should be minimal. 
    \frac{\partial}{\partial a_i} \chi^2 = 0
 
 for all :math:`i`.
+
+
+How to use matrix to solve linear model
+-----------------------------------------
+
+Let :math:`f_1(x)`, :math:`f_2(x)`,...,:math:`f_m(x)` be arbitrary fixed funxtions, the basis functions. A linear combination:
+
+.. math::
+   y_a(x) = a_1f_1(x)+...+a_mf_m(x)
+
+serves as a model with parameters :math:`a=(a_1, a_2,..., a_m)` to be determined from empirical data. So for any empirical data :math:`(x_i,y_i)`:
+
+.. math::
+   y_i \sim a_1f_1(x_i)+...+a_mf_m(x_i)
+
+should hold approximately for all sample points.
+
+
+.. math::
+   \begin{pmatrix} y_1\\...\\y_n \end{pmatrix} \sim \begin{pmatrix} f_1(x_1) ... f_m(x_1)\\... ...\\f_1(x_n) ... f_m(x_n) \end{pmatrix} \begin{pmatrix} a_1 \\ ... \\ a_m \end{pmatrix}
+   
