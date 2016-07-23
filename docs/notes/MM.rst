@@ -606,7 +606,7 @@ should hold approximately for all sample points.
 
 
 .. math::
-   \begin{pmatrix} y_1\\...\\y_n \end{pmatrix} \sim \begin{pmatrix} f_1(x_1) ... f_m(x_1)\\... ...\\f_1(x_n) ... f_m(x_n) \end{pmatrix} \begin{pmatrix} a_1 \\ ... \\ a_m \end{pmatrix}
+   \begin{pmatrix} y_1\\...\\y_n \end{pmatrix} \sim \begin{pmatrix} f_1(x_1) ... f_m(x_1)\\... ...\\f_1(x_n) ... f_m(x_n) \end{pmatrix} \begin{pmatrix} a_1 \\ ... \\ a_m \end{pmatrix}\\
 
 
-end
+   \begin{pmatrix} a_1 \\ ... \\ a_m \end{pmatrix} \sim \begin{pmatrix} f_1(x_1) ... f_m(x_1)\\... ...\\f_1(x_n) ... f_m(x_n) \end{pmatrix} ^{-1} \begin{pmatrix} y_1\\...\\y_n \end{pmatrix} 
