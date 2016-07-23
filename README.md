@@ -1,2 +1,1 @@
-# paper review
-# hippocampal neurogenesis and depression
+# notes for measurements and models
