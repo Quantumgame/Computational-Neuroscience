@@ -735,3 +735,15 @@ Chapman-Kolmogorov equation
 
 .. math::
    f(x,t+\tau)=\int_{-\infty}^{\infty}f(x-s,t)\phi(s)ds
+
+
+:math:`f(x,t)` is particle density at time :math:`t` for position :math:`x`
+
+:math:`\phi(s)` is probability density for individual jumps
+
+:math:`\int_{-\infty}^{\infty}` is integral (sum) over all possible jumps
+
+
+
+Markov Process
+=======================
