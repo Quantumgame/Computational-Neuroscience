@@ -673,3 +673,65 @@ The Mutual information is the relative entropy between the joint distribution P(
 
 
 One always has :math:`0<=I(X;Y)<=min{H(X),H(Y)}`. If X and Y are stochastically independent; and observation of X contans no information about Y, yielding :math:`I(X;Y)=0`
+
+
+Stochastic Process
+========================
+
+white noise (wind)
+-------------------
+
+all frequencies are represented with uniform power but random phase. (simulation: amplitude is from a Gaussian distribution)
+
+point process
+-------------------
+
+Point process is a widely used model for random process, finite and measurable in a state space.
+
+shotnoise (rain)
+----------------------
+
+Considering each individual random event triggers a stereotyped deterministic response. So the continuous shotnoise process is the linear superposition of the response to many such random events.
+
+Such shotnoise serves as a good model of post-synaptic membrane potential.
+
+
+stochastic process
+------------------------
+
+stochastic processes are mathematical models for the temporal evolution of system, which are either subject to non-deterministic input, or which exhibit intrinsic random behavior.
+
+Such models are typically specified by:
+
+1.state space
+2.initial conditions
+3.transition probability
+
+
+Random walk
+-----------------
+
+The particle performs random 'jumps' of size S1, S2, S3, ... at discrete points in time :math:`\tau`, :math:`2\tau`, :math:`3\tau`...
+
+The jumps are all independent and from the same distribution, which is assumed to be isotropic.
+
+If the particle starts its reajectory at position :math:`x_0`, and its position :math:`X_t` at time :math:`t=k \tau` is random, given by
+
+.. math::
+   X_t = x_0+ S_1 +...+S_k
+
+
+so,
+
+.. math::
+   E[X_t] = x_0+E[S_1]+...+E[S_k] = x_0\\
+   \mathrm{Var}[X_t] & = \mathrm{Var}[S_1]+...+\mathrm{Var}[S_k]\\
+                     & =k\mathrm{Var}[S]\\
+                     & = \frac{t}{\tau} \mathrm{Var}[S]\\
+
+
+Chapman-Kolmogorov equation
+---------------------------------
+
+.. math::
+   f(x,t+\tau)=\int_{-\infty}^{\infty}f(x-s,t)\phi(s)ds
