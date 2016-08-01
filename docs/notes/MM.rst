@@ -616,3 +616,60 @@ should hold approximately for all sample points.
 When judging whether a model is proper, maximum likelihood (or least square) is not enough. Another index is probability to encounter the measured value of :math:`\chi^2`, it is :math:`Q`.
 
 Values of :math:`Q` above 0.1 is a good approximation. If :math:`Q` is below 0.001, it is overfitting, so this model is not properly describing the data, or the noise of data is too high or not normally distributed. For values in between, if it is known that noise is not normally distributed, this model could be accepted.
+
+
+
+information theory
+===============================
+
+Information is expressed by code: using words composed of letters from a given alphabet to represent a set of objections for the purpose of communication.
+
+Two major properties of code: injectivity and prefix property.
+
+And code could be divided into different types: coarse or sparse? distributed or local? redundant or non-redundant? balanced or unbalanced?
+
+
+Entropy
+-------------
+
+Entropy quantifies the observer's uncertainty about the outcome of an experiment. To the degree to which the uncertainty is decreased through observations made, the amount of available information increases.
+
+So the entropy of an event A corresponds to the information which is gained through its observation. Entropy should depend only on the probability :math:`P(A)` of observing A:
+.. math::
+   H(A) = h[P(A)]\\
+   H(A) := -log_2 P(A)
+
+
+The base of the logarithm can be arbitrarily chosen. Commonly, the unit of entropy/information is fixed such that tossing a fair coin yields the information 1 bit (binary digit)
+
+From the observations of a discrete random variable X, which assumes that a value x with probability P(x), we can on average expect the information
+
+.. math::
+   H(X) ：= E[H(x)] = -\sum_x P(x) log_2 P(x)
+
+Joint Entropy
+----------------------
+
+X and Y are independent variables, the joint distribution is the product of two distributions:
+
+P(x,y)=P(x)P(y)
+
+so,
+
+.. math::
+   H(X,Y) & = -\sum_x \sum_y P(y)P(x) log_2 P(x) - \sum_y \sum_x P(x)P(y) log_2 P(y)\\
+          & = H(X) +H(Y)
+
+
+Mutual information
+--------------------
+
+Let X and Y are discrete random variables with joint distribution P(x,y) and marginal distribution P(x) and P(y).
+
+The Mutual information is the relative entropy between the joint distribution P(x,y) and th product distribution P(x)P(y)
+
+.. math::
+   I(X;Y) := E[H(x)+H(y)-H(x,y)] = H(X)+H(Y)-H(X,Y)
+
+
+One always has :math:`0<=I(X;Y)<=min{H(X),H(Y)}`. If X and Y are stochastically independent; and observation of X contans no information about Y, yielding :math:`I(X;Y)=0`
