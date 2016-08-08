@@ -1,3 +1,7 @@
+Measurements and Models
+++++++++++++++++++++++++++++++++
+
+
 Discrete Models and Combinatorics
 =================================
 
@@ -687,6 +691,8 @@ point process
 -------------------
 
 Point process is a widely used model for random process, finite and measurable in a state space.
+
+A point or a pulse is a short event, amplitude and duration are ignored. And point process is used to describe system of pulse trains for signaling. And only **finitely** many points are generated in finite observation intervals.
 
 shotnoise (rain)
 ----------------------

@@ -1,3 +1,7 @@
+Papers about neuron degeneration
+++++++++++++++++++++++++++++++++++
+
+
 Immature dentate gyrus and psychiatric disorder
 ====================================================
 This is challenging because psychiatric disorders are diagnosed on the basis of behavioral characteristics and not biological criteria.
@@ -20,4 +24,4 @@ iDG exists in both mutant mice and human patients.
 * mutant mice: :math:`\alpha`-CaMKII heterozygous knockout mice, Schnurri-2 (Shn-2) knockout mice, mutant SNAP-25 knock-in mice, mice treated with chronic fluoxwtine, pilocarpine-induced mouse model of epilepsy.
 * patients: schizophrenia, bipolar disorder.
 
-biomarkers of dentate gyrus granule cell maturation: 
+biomarkers of dentate gyrus granule cell maturation:
