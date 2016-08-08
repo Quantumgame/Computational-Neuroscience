@@ -72,7 +72,7 @@ Step2: update synaptic element
 
 synaptic elements: on axons (axonal boutons: senders of synaptic activity) or dendrites (spines: receivers of synaptic activity)
 
-depends on the target calcium concentration, minimum concentration.
+The growth speed of synaptic elements depends on the target calcium concentration, minimum concentration. (Z is the number of element)
 
 linear:
 
@@ -84,4 +84,11 @@ Gaussian:
 .. math::
    \frac{\mathrm{d}z}{\mathrm{d}t}=v(2e^{-\frac{Ca(t)-\xi}{\zeta}}-1)
 
-where :math:`\xi = (\eta+\epsilon)/2`, :math:`\zeta=(\epsilon-\eta)/2\sqrt{ln2}`, :math:`\eta` is the minimum amount of calcium concentration, and :math:`\epsilon` is the target calcium concentration.
+where :math:`\xi = (\eta+\epsilon)/2`, :math:`\zeta=(\epsilon-\eta)/2\sqrt{\ln{2}}`, :math:`\eta` is the minimum amount of calcium concentration, and :math:`\epsilon` is the target calcium concentration.
+
+When the Z value is increased (or decreased) by one, a new synaptic element is generated or is deleted.
+
+
+Step3: update in connectivity
+
+New elements allow the formation of new synapses, deleted elements lead to synapse breaking. Every available elemets has the same probability to be randomly chosen for a new connection. And once an element is deleted and a synapse is broken, the counterpart is released for a new connection. (enabling *rewiring*).
