@@ -12,7 +12,6 @@ Neuroscience Notebook
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    notes/index.rst
-   

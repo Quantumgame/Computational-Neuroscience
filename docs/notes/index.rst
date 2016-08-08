@@ -7,7 +7,7 @@ Notes
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    immature_dentate_gyrus.rst
    MM.rst
