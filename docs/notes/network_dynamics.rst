@@ -82,7 +82,7 @@ linear:
 Gaussian:
 
 .. math::
-   \frac{\mathrm{d}z}{\mathrm{d}t}=v(2e^{-\frac{Ca(t)-\xi}{\zeta}}-1)
+   \frac{\mathrm{d}z}{\mathrm{d}t}=v(2e^{-(\frac{Ca(t)-\xi}{\zeta}})^2-1)
 
 where :math:`\xi = (\eta+\epsilon)/2`, :math:`\zeta=(\epsilon-\eta)/2\sqrt{\ln{2}}`, :math:`\eta` is the minimum amount of calcium concentration, and :math:`\epsilon` is the target calcium concentration.
 
@@ -91,4 +91,4 @@ When the Z value is increased (or decreased) by one, a new synaptic element is g
 
 Step3: update in connectivity
 
-New elements allow the formation of new synapses, deleted elements lead to synapse breaking. Every available elemets has the same probability to be randomly chosen for a new connection. And once an element is deleted and a synapse is broken, the counterpart is released for a new connection. (enabling *rewiring*).
+New elements allow the formation of new synapses, deleted elements lead to synapse breaking. Every available elemets has the same probability to be randomly chosen for a new connection. And once an element is deleted and a synapse is broken, the counterpart is released for a new connection. (enabling **rewiring**).
