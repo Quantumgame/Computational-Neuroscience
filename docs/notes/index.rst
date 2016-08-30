@@ -13,3 +13,4 @@ Notes
    MM.rst
    MNE.rst
    network_dynamics.rst
+   Plasticity_JClub.rst
