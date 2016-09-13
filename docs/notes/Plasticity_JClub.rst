@@ -31,3 +31,12 @@ Two features of synaptic plasticity model: stability and competition
 ---------------------------------------------------------------------
 
 Stability: a property of the distribution of synaptic weights, fall into three classifications, unstable, partially stable, and stable.
+
+
+
+
+
+
+Is cortical connectivity optimized for storing information
+============================================================
+Date: 14.Sept.2016
