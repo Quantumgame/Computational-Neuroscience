@@ -11,6 +11,5 @@ Notes
 
    immature_dentate_gyrus.rst
    MM.rst
-   MNE.rst
    network_dynamics.rst
    Plasticity_JClub.rst
